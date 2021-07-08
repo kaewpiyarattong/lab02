@@ -1,4 +1,43 @@
-const app = Vue.createApp({
+app.component ('product-display',{
+    props:{
+        premium:{
+            type: Boolean,
+            required: true
+        }
+
+    },
+    template:
+    /*html*/
+    `<div class="product-display">
+        <div class="product-container">
+            <div class="product-image">
+                <img v-bind:src="image">
+            </div>
+            <div class="product-info">
+                <h1>{{ title }}</h1>
+
+                <p v-if="inStock">In Stock</p>
+                <p v-else>Out of stock</p>
+                <p>Shipping: {{shipping}} </p>
+                <product-detail :material="details"></product-detail>
+
+                <div
+                    v-for="(variant, index) in variants"
+                    :key="variant.id"
+                    @mouseover="updateVariant(index)"
+                    class="color-circle"
+                    :style="{ backgroundColor: variant.color}">
+                </div>
+                <button 
+                    class=" button " 
+                    :class="{ disabledButton: !inStock}"
+                    :disabled='!inStock' 
+                    v-on:click="addToCart ">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>`,
     data() {
         return {
             product: 'Shoes',
@@ -13,7 +52,8 @@ const app = Vue.createApp({
             ],
             selectedVariant:0,
             cart: 0,
-            onSale: true
+            onSale: true,
+            activeClass:true
         }
     },
     methods: {
@@ -44,8 +84,13 @@ const app = Vue.createApp({
             else{
                 return this.brand + ' ' + this.product  + ' ' + "not sale"
                 }
+        },
+        shipping(){
+            if (this.premium){
+                return 'Free'
+            }
+            return 30
         }
-        
 
     }
 })
