@@ -28,7 +28,7 @@ const app = Vue.createApp({
             this.selectedVariant = index;
         },
         removeToCart() {
-            this.cart.splice(0,1)
+            this.cart.splice(this.cart.legth-1,1)
         }
     },
     computed:{
