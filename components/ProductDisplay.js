@@ -44,6 +44,8 @@ app.component ('product-display',{
                 </button>
             </div>
         </div>
+        <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></reviwe-form>
     </div>`,
     data() {
         return {
@@ -58,6 +60,7 @@ app.component ('product-display',{
                 { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 }
             ],
             selectedVariant:0,
+            reviews:[],
             cart: 0,
             onSale: true,
             activeClass:true,
@@ -75,6 +78,9 @@ app.component ('product-display',{
         },
         removeToCart() {
             this.$emit('remove-to-cart', this.variants[this.selectedVariant].id)
+        },
+        addReview(review){
+            this.reviews.push(review)
         }
     },
     computed:{
