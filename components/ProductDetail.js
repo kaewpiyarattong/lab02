@@ -12,5 +12,6 @@ app.component ('product-detail',{
             <li v-for="detail in material">{{ detail }}</li>
         </ul>
         `
+    
 
 })

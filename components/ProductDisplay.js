@@ -30,10 +30,17 @@ app.component ('product-display',{
                 </div>
                 <button 
                     class=" button " 
-                    :class="{ disabledButton: !inStock}"
+                    :class="{ disabledButton: !inStock }"
                     :disabled='!inStock' 
                     v-on:click="addToCart ">
                     Add to Cart
+                </button>
+                <button 
+                    class=" button " 
+                    :class="{ disabledButton: !inStock}"
+                    :disabled='!inStock'
+                    v-on:click="removeToCart ">
+                    Removes
                 </button>
             </div>
         </div>
@@ -53,18 +60,21 @@ app.component ('product-display',{
             selectedVariant:0,
             cart: 0,
             onSale: true,
-            activeClass:true
+            activeClass:true,
         }
     },
     methods: {
         addToCart() {
-            this.cart += 1
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
         },
         updateImage(variantImage) {
             this.image = variantImage
         },
         updateVariant(index){
             this.selectedVariant = index;
+        },
+        removeToCart() {
+            this.$emit('remove-to-cart', this.variants[this.selectedVariant].id)
         }
     },
     computed:{
